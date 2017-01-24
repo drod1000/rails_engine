@@ -20,16 +20,16 @@ ActiveRecord::Schema.define(version: 20170124031226) do
     t.string   "invoice_id"
     t.integer  "quantity"
     t.integer  "unit_price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: 0, null: false
+    t.datetime "updated_at", precision: 0, null: false
   end
 
   create_table "invoices", force: :cascade do |t|
     t.string   "customer_id"
     t.string   "merchant_id"
     t.text     "status"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",  precision: 0, null: false
+    t.datetime "updated_at",  precision: 0, null: false
   end
 
   create_table "items", force: :cascade do |t|
