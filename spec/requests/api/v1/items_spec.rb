@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Items API" do
   it "returns a list of all items" do
-    create_list(:items, 3)
+    create_list(:item, 3)
 
     get '/api/v1/items'
 

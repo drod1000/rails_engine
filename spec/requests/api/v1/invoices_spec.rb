@@ -8,6 +8,7 @@ describe "Invoices API" do
 
     invoices = JSON.parse(response.body)
     invoice = invoices.first
+
     expect(response).to be_success
     expect(invoices.count).to eq(3)
     expect(invoice).to be_a(Hash)
