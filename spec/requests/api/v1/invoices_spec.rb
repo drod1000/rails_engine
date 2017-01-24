@@ -18,4 +18,20 @@ describe "Invoices API" do
     expect(invoice).to have_key("created_at")
     expect(invoice).to have_key("updated_at")
   end
+
+  it "returns a single invoice" do
+    invoice = create(:invoice)
+    get "/api/v1/invoices/#{Invoice.first.id}"
+
+    found_invoice = JSON.parse(response.body).first
+
+    expect(response).to be_success
+    expect(found_invoice).to be_a(Hash)
+    expect(found_invoice).to have("#{invoice.id}")
+    expect(found_invoice).to have("#{invoice.customer_id}")
+    expect(found_invoice).to have("#{invoice.merchant_id}")
+    expect(found_invoice).to have("#{invoice.status}")
+    expect(found_invoice).to have("#{invoice.created_at}")
+    expect(found_invoice).to have("#{invoice.updated_at}")
+  end
 end
