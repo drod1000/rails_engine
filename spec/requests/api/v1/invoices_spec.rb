@@ -196,11 +196,30 @@ describe "Invoices API" do
     expect(first_invoice["status"]).to eq("returned")
   end
 
-  xit "can return multiple record with matching created_at" do
+  it "can return multiple record with matching created_at" do
+    create_list(:invoice, 2)
+
+    get "/api/v1/invoices/find_all?created_at=#{Invoice.first.created_at}"
+
+    found_invoice = JSON.parse(response.body)
+    first_invoice = found_invoice.first
+
+    expect(response).to be_success
+    expect(found_invoice).to be_a(Array)
+    expect(found_invoice.count).to eq(2)
 
   end
 
-  xit "can return multiple records with matching updated_at" do
-    
+  it "can return multiple records with matching updated_at" do
+    create_list(:invoice, 2)
+
+    get "/api/v1/invoices/find_all?updated_at=#{Invoice.first.updated_at}"
+
+    found_invoice = JSON.parse(response.body)
+    first_invoice = found_invoice.first
+
+    expect(response).to be_success
+    expect(found_invoice).to be_a(Array)
+    expect(found_invoice.count).to eq(2)
   end
 end

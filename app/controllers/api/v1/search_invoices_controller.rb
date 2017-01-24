@@ -8,9 +8,13 @@ class Api::V1::SearchInvoicesController < ApplicationController
       render json: Invoice.where(merchant_id: params[:merchant_id])
     elsif params[:status]
       render json: Invoice.where(status: params[:status])
+    elsif params[:created_at]
+      render json: Invoice.where(created_at: params[:created_at])
+    elsif params[:updated_at]
+      render json: Invoice.where(updated_at: params[:updated_at])
     end
   end
-  
+
   def show
     if params[:id]
        render json: Invoice.find_by(id: params[:id])
