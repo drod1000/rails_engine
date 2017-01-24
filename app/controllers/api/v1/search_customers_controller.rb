@@ -9,9 +9,9 @@ class Api::V1::SearchCustomersController < ApplicationController
     elsif params[:last_name]
       render json: Customer.where(last_name: params[:last_name])
     elsif params[:created_at]
-      render json: Customer.where(created_at: Time.zone.parse(params[:created_at]))
+      render json: Customer.where(created_at: params[:created_at])
     elsif params[:updated_at]
-      render json: Customer.where(updated_at: Time.zone.parse(params[:updated_at]))
+      render json: Customer.where(updated_at: params[:updated_at])
     else
       raise ActionController::RoutingError.new('Not Found')
     end
@@ -25,9 +25,9 @@ class Api::V1::SearchCustomersController < ApplicationController
     elsif params[:last_name]
       render json: Customer.find_by(last_name: params[:last_name])
     elsif params[:created_at]
-      render json: Customer.find_by(created_at: Time.zone.parse(params[:created_at]))
+      render json: Customer.find_by(created_at: params[:created_at])
     elsif params[:updated_at]
-      render json: Customer.find_by(updated_at: Time.zone.parse(params[:updated_at]))
+      render json: Customer.find_by(updated_at: params[:updated_at])
     else
       raise ActionController::RoutingError.new('Not Found')
     end

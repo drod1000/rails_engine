@@ -59,6 +59,17 @@ describe "Customers API" do
     expect(found_customer["last_name"]).to eq(customer.last_name)
   end
 
+  it "finds one customer with matching last_name case insensitive" do
+    customer = create(:customer)
+    get "/api/v1/customers/find?last_name=mytext"
+    found_customer = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_customer["id"]).to eq(customer.id)
+    expect(found_customer["first_name"]).to eq(customer.first_name)
+    expect(found_customer["last_name"]).to eq(customer.last_name)
+  end
+
   it "finds one customer with matching created_at" do
     customer = create(:customer)
     get "/api/v1/customers/find?created_at=#{customer.created_at}"
