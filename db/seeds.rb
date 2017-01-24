@@ -7,8 +7,6 @@ Invoice.delete_all
 Transaction.delete_all
 InvoiceItem.delete_all
 
-
-
 CSV.foreach('db/data/merchants.csv', headers:true) do |row|
   Merchant.create!(id: row["id"],
                   name: row["name"], 
@@ -24,7 +22,7 @@ CSV.foreach('db/data/customers.csv', headers:true) do |row|
                   updated_at: row["updated_at"])
 end
 
-CSV.foreach('/db/data/items.csv', headers:true) do |row|
+CSV.foreach('db/data/items.csv', headers:true) do |row|
   Item.create!(id: row["id"],
               name: row["name"],
               description: row["description"],
@@ -42,20 +40,20 @@ CSV.foreach('db/data/invoices.csv', headers:true) do |row|
 end
 
 CSV.foreach('db/data/invoice_items.csv', headers:true) do |row|
-  InvoiceItems.create!(id: row["id"],
+  InvoiceItem.create!(id: row["id"],
                       item_id: row["item_id"],
                       invoice_id: row["invoice_id"],
-                      quantitiy: row["quantitiy"]
+                      quantity: row["quantitiy"],
                       created_at: row["created_at"],
                       updated_at: row["updated_at"])
 end
 
-CSV.foreach('db/data/transactions.csv', header:true) do |row|
+CSV.foreach('db/data/transactions.csv', headers:true) do |row|
   Transaction.create!(id: row["id"],
                       invoice_id: row["invoice_id"],
                       result: row["result"],
                       credit_card_number: row["credit_card_number"],
                       credit_card_expiration_date: row["credit_card_expiration_date"],
                       created_at: row["created_at"], 
-                      updated_at: row["updated_at"]))
+                      updated_at: row["updated_at"])
 end
