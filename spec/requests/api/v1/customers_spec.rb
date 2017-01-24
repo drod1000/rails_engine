@@ -60,8 +60,8 @@ describe "Customers API" do
   end
 
   it "finds one customer with matching last_name case insensitive" do
-    customer = create(:customer)
-    get "/api/v1/customers/find?last_name=#{Customer.first.last_name.downcase}"
+    customer = create(:customer, last_name: "Frank")
+    get "/api/v1/customers/find?last_name=frank"
     found_customer = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -71,8 +71,8 @@ describe "Customers API" do
   end
 
   it "finds one customer with matching first_name case insensitive" do
-    customer = create(:customer)
-    get "/api/v1/customers/find?first_name=#{Customer.first.first_name.downcase}"
+    customer = create(:customer, first_name: "Helen")
+    get "/api/v1/customers/find?first_name=helen"
     found_customer = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -128,8 +128,9 @@ describe "Customers API" do
   end
 
   it "finds all customers with matching first_name case insensitive" do
-    create_list(:customer, 3)
-    get "/api/v1/customers/find_all?first_name=#{Customer.first.first_name.downcase}"
+    create(:customer, first_name: "Frank")
+    create_list(:customer, 2)
+    get "/api/v1/customers/find_all?first_name=frank"
     found_customers = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -140,7 +141,7 @@ describe "Customers API" do
   end
 
   it "finds all customers with matching last_name" do
-        create_list(:customer, 3)
+    create_list(:customer, 2)
     get "/api/v1/customers/find_all?last_name=#{Customer.first.last_name}"
     found_customers = JSON.parse(response.body)
 
@@ -152,12 +153,13 @@ describe "Customers API" do
   end
 
   it "finds all customers with matching last_name case insensitive" do
-    create_list(:customer, 3)
-    get "/api/v1/customers/find_all?last_name=#{Customer.first.last_name.downcase}"
+    create(:customer, last_name: "George")
+    create_list(:customer, 2)
+    get "/api/v1/customers/find_all?last_name=george"
     found_customers = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(found_customers).to be_a(Array)
+    expect(found_customers.count).to eq(1)
     expect(found_customers.first["id"]).to eq(Customer.first.id)
     expect(found_customers.first["first_name"]).to eq(Customer.first.first_name)
     expect(found_customers.first["last_name"]).to eq(Customer.first.last_name)
