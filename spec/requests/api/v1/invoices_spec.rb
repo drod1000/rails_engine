@@ -180,4 +180,19 @@ describe "Invoices API" do
     expect(found_invoices.count).to eq(2)
     expect(first_invoice["merchant_id"]).to eq("10")
   end
+
+  it "can return multiple records with matching status" do
+    create_list(:invoice, 2)
+    create_list(:invoice, 2, status: "returned")
+
+    get "/api/v1/invoices/find_all?status=returned"
+
+    found_invoices = JSON.parse(response.body)
+    first_invoice = found_invoices.first
+
+    expect(response).to be_success
+    expect(found_invoices).to be_a(Array)
+    expect(found_invoices.count).to eq(2)
+    expect(first_invoice["status"]).to eq("returned")
+  end
 end

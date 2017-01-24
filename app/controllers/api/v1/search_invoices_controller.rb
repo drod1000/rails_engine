@@ -6,6 +6,8 @@ class Api::V1::SearchInvoicesController < ApplicationController
       render json: Invoice.where(customer_id: params[:customer_id])
     elsif params[:merchant_id]
       render json: Invoice.where(merchant_id: params[:merchant_id])
+    elsif params[:status]
+      render json: Invoice.where(status: params[:status])
     end
   end
   def show
