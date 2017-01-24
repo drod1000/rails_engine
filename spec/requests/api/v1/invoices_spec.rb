@@ -24,7 +24,6 @@ describe "Invoices API" do
     get "/api/v1/invoices/#{Invoice.first.id}"
 
     found_invoice = JSON.parse(response.body)
-
     expect(response).to be_success
     expect(found_invoice).to be_a(Hash)
     expect(found_invoice["id"]).to eq(invoice.id)
