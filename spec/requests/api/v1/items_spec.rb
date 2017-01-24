@@ -73,6 +73,23 @@ describe "Items API" do
     expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
+  it "can return single record by name case insensitive" do
+    item = create(:item, name: "goodname")
+
+    get "/api/v1/items/find?name=GoodName"
+
+    found_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_item["id"]).to eq(item.id)
+    expect(found_item["name"]).to eq(item.name)
+    expect(found_item["description"]).to eq(item.description)
+    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["merchant_id"]).to eq(item.merchant_id)
+    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
+    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
+  end
+
   it "can return single record by description" do
     item = create(:item)
 
@@ -183,6 +200,20 @@ describe "Items API" do
     expect(found_items).to be_a(Array)
     expect(found_items.count).to eq(2)
     expect(first_item["name"]).to eq("GoodName")
+  end
+
+  it "can return multiple records with matching name case insensitive" do
+    create(:item)
+    create(:item, name: "GoodName")
+    create(:item, name: "goodname")
+
+    get "/api/v1/items/find_all?name=GoodName"
+
+    found_items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_items).to be_a(Array)
+    expect(found_items.count).to eq(2)
   end
 
   xit "can return multiple records with matching description" do
