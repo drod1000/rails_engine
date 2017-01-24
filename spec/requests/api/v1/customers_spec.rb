@@ -61,7 +61,7 @@ describe "Customers API" do
 
   it "finds one customer with matching last_name case insensitive" do
     customer = create(:customer)
-    get "/api/v1/customers/find?last_name=mytext"
+    get "/api/v1/customers/find?last_name=#{Customer.first.last_name.downcase}"
     found_customer = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -72,7 +72,7 @@ describe "Customers API" do
 
   it "finds one customer with matching first_name case insensitive" do
     customer = create(:customer)
-    get "/api/v1/customers/find?first_name=mytext"
+    get "/api/v1/customers/find?first_name=#{Customer.first.first_name.downcase}"
     found_customer = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -129,7 +129,7 @@ describe "Customers API" do
 
   it "finds all customers with matching first_name case insensitive" do
     create_list(:customer, 3)
-    get "/api/v1/customers/find_all?first_name=mytext"
+    get "/api/v1/customers/find_all?first_name=#{Customer.first.first_name.downcase}"
     found_customers = JSON.parse(response.body)
 
     expect(response).to be_success
@@ -153,7 +153,7 @@ describe "Customers API" do
 
   it "finds all customers with matching last_name case insensitive" do
     create_list(:customer, 3)
-    get "/api/v1/customers/find_all?last_name=mytext"
+    get "/api/v1/customers/find_all?last_name=#{Customer.first.last_name.downcase}"
     found_customers = JSON.parse(response.body)
 
     expect(response).to be_success
