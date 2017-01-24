@@ -144,10 +144,40 @@ describe "Invoices API" do
 
     get "/api/v1/invoices/find_all?id=#{Invoice.first.id}"
 
-    found_merchants = JSON.parse(response.body)
+    found_invoices = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(found_merchants.count).to eq(1)
+    expect(found_invoices).to be_a(Array)
+    expect(found_invoices.count).to eq(1)
+  end
 
+  it "can return multiple records with matching customer_id" do
+    create_list(:invoice, 2)
+    create_list(:invoice, 2, customer_id: "5")
+
+    get "/api/v1/invoices/find_all?customer_id=5"
+
+    found_invoices = JSON.parse(response.body)
+    first_invoice = found_invoices.first
+
+    expect(response).to be_success
+    expect(found_invoices).to be_a(Array)
+    expect(found_invoices.count).to eq(2)
+    expect(first_invoice["customer_id"]).to eq("5")
+  end
+
+  it "can return multiple records with matching merchant_id" do
+    create_list(:invoice, 2)
+    create_list(:invoice, 2, merchant_id: "10")
+
+    get "/api/v1/invoices/find_all?merchant_id=10"
+
+    found_invoices = JSON.parse(response.body)
+    first_invoice = found_invoices.first
+
+    expect(response).to be_success
+    expect(found_invoices).to be_a(Array)
+    expect(found_invoices.count).to eq(2)
+    expect(first_invoice["merchant_id"]).to eq("10")
   end
 end

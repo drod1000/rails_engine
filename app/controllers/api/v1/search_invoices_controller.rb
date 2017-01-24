@@ -1,6 +1,12 @@
 class Api::V1::SearchInvoicesController < ApplicationController
   def index
-    render json: Invoice.where(id: params[:id])
+    if params[:id]
+      render json: Invoice.where(id: params[:id])
+    elsif params[:customer_id]
+      render json: Invoice.where(customer_id: params[:customer_id])
+    elsif params[:merchant_id]
+      render json: Invoice.where(merchant_id: params[:merchant_id])
+    end
   end
   def show
     if params[:id]
