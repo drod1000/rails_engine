@@ -16,8 +16,15 @@ ActiveRecord::Schema.define(version: 20170124200341) do
   enable_extension "plpgsql"
   enable_extension "citext"
 
+  create_table "customers", force: :cascade do |t|
+    t.citext   "first_name"
+    t.citext   "last_name"
+    t.datetime "created_at", precision: 0, null: false
+    t.datetime "updated_at", precision: 0, null: false
+  end
+
   create_table "merchants", force: :cascade do |t|
-    t.text     "name"
+    t.citext   "name"
     t.datetime "created_at", precision: 0, null: false
     t.datetime "updated_at", precision: 0, null: false
   end
