@@ -23,6 +23,32 @@ ActiveRecord::Schema.define(version: 20170124200341) do
     t.datetime "updated_at", precision: 0, null: false
   end
 
+  create_table "invoice_items", force: :cascade do |t|
+    t.string   "item_id"
+    t.string   "invoice_id"
+    t.integer  "quantity"
+    t.integer  "unit_price"
+    t.datetime "created_at", precision: 0, null: false
+    t.datetime "updated_at", precision: 0, null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string   "customer_id"
+    t.string   "merchant_id"
+    t.text     "status"
+    t.datetime "created_at",  precision: 0, null: false
+    t.datetime "updated_at",  precision: 0, null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.citext   "name"
+    t.citext   "description"
+    t.integer  "unit_price"
+    t.string   "merchant_id"
+    t.datetime "created_at",  precision: 0, null: false
+    t.datetime "updated_at",  precision: 0, null: false
+  end
+
   create_table "merchants", force: :cascade do |t|
     t.citext   "name"
     t.datetime "created_at", precision: 0, null: false
