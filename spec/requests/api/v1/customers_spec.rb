@@ -92,10 +92,6 @@ describe "Customers API" do
     expect(found_customer["last_name"]).to eq(customer.last_name)
   end
 
-  it "raises error if params don't match find" do
-    expect { get '/api/v1/customers/find?foo=bar' }.to raise_error
-  end
-
   it "finds all customers with matching id" do
     create_list(:customer, 3)
     get "/api/v1/customers/find_all?id=#{Customer.first.id}"
@@ -154,10 +150,6 @@ describe "Customers API" do
     expect(found_customers.first["id"]).to eq(Customer.first.id)
     expect(found_customers.first["first_name"]).to eq(Customer.first.first_name)
     expect(found_customers.first["last_name"]).to eq(Customer.first.last_name)
-  end
-
-  it "raises error if params don't match find_all" do
-    expect { get '/api/v1/customers/find_all?foo=bar' }.to raise_error
   end
 
   it "finds random customer" do
