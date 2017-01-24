@@ -20,4 +20,22 @@ describe "Items API" do
     expect(item).to have_key("created_at")
     expect(item).to have_key("updated_at")
   end
+
+  it "returns a single item" do
+    item = create(:item)
+
+    get "/api/v1/items/#{Item.first.id}"
+
+    found_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_item).to be_a(Hash)
+    expect(found_item["id"]).to eq(item.id)
+    expect(found_item["name"]).to eq(item.name)
+    expect(found_item["description"]).to eq(item.description)
+    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["merchant_id"]).to eq(item.merchant_id)
+    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
+    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
+  end
 end
