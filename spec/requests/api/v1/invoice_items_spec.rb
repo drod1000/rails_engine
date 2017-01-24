@@ -20,4 +20,23 @@ describe "Invoice Items API" do
     expect(invoice_item).to have_key("created_at")
     expect(invoice_item).to have_key("updated_at")
   end
+
+  it "returns a single invoice item" do
+    invoice_item = create(:invoice_item)
+
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}"
+
+    found_invoice_item = JSON.parse(response.body)
+
+    expect(response).to be success
+    expect(found_invoice_item).to be_a(Hash)
+    expect(found_invoice_item["id"]).to eq(invoice_item.id)
+    expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
+    expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
+    expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(Time.zone.parse(found_invoice_item["created_at"]).to_s).to eq(invoice_item.created_at.to_s)
+    expect(Time.zone.parse(found_invoice_item["updated_at"]).to_s).to eq(invoice_item.updated_at.to_s)
+
+  end
 end
