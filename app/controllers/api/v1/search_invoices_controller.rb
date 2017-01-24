@@ -1,4 +1,7 @@
 class Api::V1::SearchInvoicesController < ApplicationController
+  def index
+    render json: Invoice.where(id: params[:id])
+  end
   def show
     if params[:id]
        render json: Invoice.find_by(id: params[:id])

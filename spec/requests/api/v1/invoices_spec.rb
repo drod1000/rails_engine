@@ -138,4 +138,16 @@ describe "Invoices API" do
     expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
     expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
+
+  it "can return multiple records with matching id" do
+    create_list(:invoice, 2)
+
+    get "/api/v1/invoices/find_all?id=#{Invoice.first.id}"
+
+    found_merchants = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_merchants.count).to eq(1)
+
+  end
 end
