@@ -10,6 +10,10 @@ class Api::V1::SearchInvoiceItemsController < ApplicationController
       render json: InvoiceItem.where(quantity: params[:quantity])
     elsif params[:unit_price]
       render json: InvoiceItem.where(unit_price: params[:unit_price])
+    elsif params[:created_at]
+      render json: InvoiceItem.where(created_at: params[:created_at])
+    elsif params[:updated_at]
+      render json: InvoiceItem.where(created_at: params[:updated_at])
     end
   end
 

@@ -231,11 +231,29 @@ describe "Invoice Items API" do
     expect(first_invoice_item["unit_price"]).to eq(1200)
   end
 
-  xit "can return multiple records with matching created_at" do
+  it "can return multiple records with matching created_at" do
+    create_list(:invoice_item, 2)
 
+    get "/api/v1/invoice_items/find_all?created_at=#{InvoiceItem.first.created_at}"
+
+    found_invoice_items = JSON.parse(response.body)
+    first_invoice_item = found_invoice_items.first
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(2)
   end
 
-  xit "can return multiple records with matching updated_at" do
+  it "can return multiple records with matching updated_at" do
+    create_list(:invoice_item, 2)
 
+    get "/api/v1/invoice_items/find_all?updated_at=#{InvoiceItem.first.updated_at}"
+
+    found_invoice_items = JSON.parse(response.body)
+    first_invoice_item = found_invoice_items.first
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(2)
   end
 end
