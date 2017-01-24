@@ -5,7 +5,7 @@ class CreateTransactions < ActiveRecord::Migration[5.0]
       t.integer :credit_card_number
       t.text :result
 
-      t.timestamps, precision: 0
+      t.timestamps precision: 0
     end
   end
 end

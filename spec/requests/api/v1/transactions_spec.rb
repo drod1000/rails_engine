@@ -80,7 +80,7 @@ describe "Transactions API" do
     expect(found_transaction["result"]).to eq(transaction.result)
   end
 
-  xit "can find a single transactions by created_at" do
+  it "can find a single transactions by created_at" do
     transaction = create(:transaction)
     get "/api/v1/transactions/find?created_at=#{transaction.created_at}"
     found_transaction = JSON.parse(response.body)
@@ -93,7 +93,7 @@ describe "Transactions API" do
     expect(found_transaction["result"]).to eq(transaction.result)
   end
 
-  xit "can find a single transactions by updated_at" do
+  it "can find a single transactions by updated_at" do
     transaction = create(:transaction)
     get "/api/v1/transactions/find?updated_at=#{transaction.updated_at}"
     found_transaction = JSON.parse(response.body)
@@ -105,11 +105,7 @@ describe "Transactions API" do
     expect(found_transaction["credit_card_number"]).to eq(transaction.credit_card_number)
     expect(found_transaction["result"]).to eq(transaction.result)
   end
-
-  it "will raise error if params are wrong for find" do
-    expect { get '/api/v1/transactions/find?foo=bar' }.to raise_error
-  end
-
+  
   it "can find all transactions with id" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?id=#{Transaction.first.id}"
@@ -162,7 +158,7 @@ describe "Transactions API" do
     expect(found_transactions.first["result"]).to eq(Transaction.first.result)
   end
 
-  xit "can find all transactions with created_at" do
+  it "can find all transactions with created_at" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?created_at=#{Transaction.first.created_at}"
     found_transactions = JSON.parse(response.body)
@@ -175,7 +171,7 @@ describe "Transactions API" do
     expect(found_transactions.first["result"]).to eq(Transaction.first.result)
   end
 
-  xit "can find all transactions with updated_at" do
+  it "can find all transactions with updated_at" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?updated_at=#{Transaction.first.updated_at}"
     found_transactions = JSON.parse(response.body)
@@ -186,10 +182,6 @@ describe "Transactions API" do
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
     expect(found_transactions.first["result"]).to eq(Transaction.first.result)
-  end
-
-  it "will raise error if params are wrong for find_all" do
-    expect { get '/api/v1/merchants/find_all?foo=bar' }.to raise_error
   end
 
   it "will return random transaction" do
