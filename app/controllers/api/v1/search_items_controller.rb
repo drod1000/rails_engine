@@ -8,6 +8,10 @@ class Api::V1::SearchItemsController < ApplicationController
       render json: Item.where(unit_price: params[:unit_price])
     elsif params[:merchant_id]
       render json: Item.where(merchant_id: params[:merchant_id])
+    elsif params[:created_at]
+      render json: Item.where(created_at: params[:created_at])
+    elsif params[:updated_at]
+      render json: Item.where(updated_at: params[:updated_at])
     end
   end
 

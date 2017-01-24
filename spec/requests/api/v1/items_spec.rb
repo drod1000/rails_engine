@@ -219,11 +219,29 @@ describe "Items API" do
     expect(first_item["merchant_id"]).to eq("8")
   end
 
-  xit "can return multiple records with matching created_at" do
+  it "can return multiple records with matching created_at" do
+    create_list(:item, 2)
 
+    get "/api/v1/items/find_all?created_at=#{Item.first.created_at}"
+
+    found_item = JSON.parse(response.body)
+    first_item = found_item.first
+
+    expect(response).to be_success
+    expect(found_item).to be_a(Array)
+    expect(found_item.count).to eq(2)
   end
 
-  xit "can return multiple records with matching updated_at" do
-    
+  it "can return multiple records with matching updated_at" do
+    create_list(:item, 2)
+
+    get "/api/v1/items/find_all?updated_at=#{Item.first.updated_at}"
+
+    found_item = JSON.parse(response.body)
+    first_item = found_item.first
+
+    expect(response).to be_success
+    expect(found_item).to be_a(Array)
+    expect(found_item.count).to eq(2)
   end
 end
