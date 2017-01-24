@@ -33,8 +33,6 @@ describe "Invoices API" do
     expect(found_invoice["customer_id"]).to eq(invoice.customer_id)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return single record by id" do
@@ -50,8 +48,6 @@ describe "Invoices API" do
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return single record by customer_id" do
@@ -67,8 +63,6 @@ describe "Invoices API" do
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return single record by merchant_id" do
@@ -84,8 +78,6 @@ describe "Invoices API" do
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return single record by status" do
@@ -101,8 +93,6 @@ describe "Invoices API" do
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return single record by created_at" do
@@ -118,8 +108,6 @@ describe "Invoices API" do
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return single record by updated_at" do
@@ -135,8 +123,6 @@ describe "Invoices API" do
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
     expect(found_invoice["status"]).to eq(invoice.status)
     expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
-    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
-    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 
   it "can return multiple records with matching id" do
@@ -149,6 +135,7 @@ describe "Invoices API" do
     expect(response).to be_success
     expect(found_invoices).to be_a(Array)
     expect(found_invoices.count).to eq(1)
+    expect(found_invoices.first["id"]).to eq(Invoice.first.id)
   end
 
   it "can return multiple records with matching customer_id" do

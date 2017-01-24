@@ -35,8 +35,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by id" do
@@ -52,8 +50,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by name" do
@@ -69,8 +65,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by name case insensitive" do
@@ -86,8 +80,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by description" do
@@ -103,8 +95,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by unit price" do
@@ -120,8 +110,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by merchant_id" do
@@ -137,8 +125,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by created_at" do
@@ -154,8 +140,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return single record by updated_at" do
@@ -171,8 +155,6 @@ describe "Items API" do
     expect(found_item["description"]).to eq(item.description)
     expect(found_item["unit_price"]).to eq(item.unit_price)
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
-    expect(Time.zone.parse(found_item["created_at"]).to_s).to eq(item.created_at.to_s)
-    expect(Time.zone.parse(found_item["updated_at"]).to_s).to eq(item.updated_at.to_s)
   end
 
   it "can return multiple records with matching id" do
@@ -185,6 +167,7 @@ describe "Items API" do
     expect(response).to be_success
     expect(found_items).to be_a(Array)
     expect(found_items.count).to eq(1)
+    expect(found_items.first["id"]).to eq(Item.first.id)
   end
 
   it "can return multiple records with matching name" do
