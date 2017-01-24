@@ -47,6 +47,16 @@ describe 'Merchants API' do
     expect(found_merchant["name"]).to eq(merchant.name)
   end
 
+  it "can find a single record by name case insensitive" do
+    merchant = create(:merchant)
+    get "/api/v1/merchants/find?name=sellingstuff"
+    found_merchant = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_merchant["id"]).to eq(merchant.id)
+    expect(found_merchant["name"]).to eq(merchant.name)
+  end
+
   it "can find a single record by created_at" do
     merchant = create(:merchant)
     get "/api/v1/merchants/find?created_at=#{merchant.created_at}"
@@ -67,7 +77,6 @@ describe 'Merchants API' do
     expect(found_merchant["name"]).to eq(merchant.name)
   end
 
-
   it "can find all records matching id" do
     create_list(:merchant, 3)
     get "/api/v1/merchants/find_all?id=#{Merchant.first.id}"
@@ -86,7 +95,7 @@ describe 'Merchants API' do
 
     expect(response).to be_success
     expect(found_merchants).to be_a(Array)
-    expect(found_merchants.count).to eq(3)
+    expect(found_merchants.count).to eq(1)
     expect(found_merchants.first["id"]).to eq(Merchant.first.id)
     expect(found_merchants.first["name"]).to eq(Merchant.first.name)
   end
@@ -98,7 +107,7 @@ describe 'Merchants API' do
 
     expect(response).to be_success
     expect(found_merchants).to be_a(Array)
-    expect(found_merchants.count).to eq(1)
+    expect(found_merchants.count).to eq(3)
     expect(found_merchants.first["id"]).to eq(Merchant.first.id)
     expect(found_merchants.first["name"]).to eq(Merchant.first.name)
   end
@@ -110,7 +119,7 @@ describe 'Merchants API' do
 
     expect(response).to be_success
     expect(found_merchants).to be_a(Array)
-    expect(found_merchants.count).to eq(1)
+    expect(found_merchants.count).to eq(3)
     expect(found_merchants.first["id"]).to eq(Merchant.first.id)
     expect(found_merchants.first["name"]).to eq(Merchant.first.name)
   end
