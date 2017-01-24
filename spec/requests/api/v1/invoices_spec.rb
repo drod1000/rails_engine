@@ -195,4 +195,12 @@ describe "Invoices API" do
     expect(found_invoices.count).to eq(2)
     expect(first_invoice["status"]).to eq("returned")
   end
+
+  xit "can return multiple record with matching created_at" do
+
+  end
+
+  xit "can return multiple records with matching updated_at" do
+    
+  end
 end

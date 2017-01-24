@@ -158,4 +158,84 @@ describe "Invoice Items API" do
     expect(Time.zone.parse(found_invoice_item["created_at"]).to_s).to eq(invoice_item.created_at.to_s)
     expect(Time.zone.parse(found_invoice_item["updated_at"]).to_s).to eq(invoice_item.updated_at.to_s)
   end
+
+  it "can return multiple records with matching id" do
+    create_list(:invoice_item, 2)
+
+    get "/api/v1/invoice_items/find_all?id=#{InvoiceItem.first.id}"
+
+    found_invoice_items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(1)
+  end
+
+  it "can return multiple records with matching item_id" do
+    create_list(:invoice_item, 2)
+    create_list(:invoice_item, 2, item_id: "6")
+
+    get "/api/v1/invoice_items/find_all?item_id=6"
+
+    found_invoice_items = JSON.parse(response.body)
+    first_invoice_item = found_invoice_items.first
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(2)
+    expect(first_invoice_item["item_id"]).to eq("6")
+  end
+
+  it "can return multiple records with matching invoice_id" do
+    create_list(:invoice_item, 2)
+    create_list(:invoice_item, 2, invoice_id: "7")
+
+    get "/api/v1/invoice_items/find_all?invoice_id=7"
+
+    found_invoice_items = JSON.parse(response.body)
+    first_invoice_item = found_invoice_items.first
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(2)
+    expect(first_invoice_item["invoice_id"]).to eq("7")
+  end
+
+  it "can return multiple records with matching quantity" do
+    create_list(:invoice_item, 2)
+    create_list(:invoice_item, 2, quantity: 50)
+
+    get "/api/v1/invoice_items/find_all?quantity=50"
+
+    found_invoice_items = JSON.parse(response.body)
+    first_invoice_item = found_invoice_items.first
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(2)
+    expect(first_invoice_item["quantity"]).to eq(50)
+  end
+
+  it "can return multiple records with matching unit_price" do
+    create_list(:invoice_item, 2)
+    create_list(:invoice_item, 2, unit_price: 1200)
+
+    get "/api/v1/invoice_items/find_all?unit_price=1200"
+
+    found_invoice_items = JSON.parse(response.body)
+    first_invoice_item = found_invoice_items.first
+
+    expect(response).to be_success
+    expect(found_invoice_items).to be_a(Array)
+    expect(found_invoice_items.count).to eq(2)
+    expect(first_invoice_item["unit_price"]).to eq(1200)
+  end
+
+  xit "can return multiple records with matching created_at" do
+
+  end
+
+  xit "can return multiple records with matching updated_at" do
+
+  end
 end
