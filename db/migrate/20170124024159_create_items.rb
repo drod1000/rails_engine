@@ -5,8 +5,8 @@ class CreateItems < ActiveRecord::Migration[5.0]
       t.text    :description
       t.integer :unit_price
       t.string :merchant_id
-      
-      t.timestamps
+
+      t.timestamps precision: 0
     end
   end
 end

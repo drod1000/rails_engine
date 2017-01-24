@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 20170124031226) do
     t.text     "description"
     t.integer  "unit_price"
     t.string   "merchant_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",  precision: 0, null: false
+    t.datetime "updated_at",  precision: 0, null: false
   end
 
 end
