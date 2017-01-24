@@ -6,7 +6,7 @@ describe "Items API" do
 
     get '/api/v1/items'
 
-    items = JSON.parse
+    items = JSON.parse(response.body)
     item = items.first
 
     expect(response).to be_success
@@ -17,7 +17,7 @@ describe "Items API" do
     expect(item).to have_key("description")
     expect(item).to have_key("unit_price")
     expect(item).to have_key("merchant_id")
-    expect(item).to have_key("created_ath")
+    expect(item).to have_key("created_at")
     expect(item).to have_key("updated_at")
   end
 end
