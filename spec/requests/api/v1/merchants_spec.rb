@@ -95,7 +95,7 @@ describe 'Merchants API' do
 
     expect(response).to be_success
     expect(found_merchants).to be_a(Array)
-    expect(found_merchants.count).to eq(3)
+    expect(found_merchants.count).to eq(1)
     expect(found_merchants.first["id"]).to eq(Merchant.first.id)
     expect(found_merchants.first["name"]).to eq(Merchant.first.name)
   end
