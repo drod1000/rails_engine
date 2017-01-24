@@ -42,4 +42,10 @@ ActiveRecord::Schema.define(version: 20170124182129) do
     t.datetime "updated_at",  precision: 0, null: false
   end
 
+  create_table "merchants", force: :cascade do |t|
+    t.text     "name"
+    t.datetime "created_at", precision: 0, null: false
+    t.datetime "updated_at", precision: 0, null: false
+  end
+
 end
