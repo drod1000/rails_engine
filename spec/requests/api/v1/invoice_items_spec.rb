@@ -28,7 +28,7 @@ describe "Invoice Items API" do
 
     found_invoice_item = JSON.parse(response.body)
 
-    expect(response).to be success
+    expect(response).to be_success
     expect(found_invoice_item).to be_a(Hash)
     expect(found_invoice_item["id"]).to eq(invoice_item.id)
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
