@@ -105,7 +105,7 @@ describe "Transactions API" do
     expect(found_transaction["credit_card_number"]).to eq(transaction.credit_card_number)
     expect(found_transaction["result"]).to eq(transaction.result)
   end
-  
+
   it "can find all transactions with id" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?id=#{Transaction.first.id}"
@@ -148,6 +148,19 @@ describe "Transactions API" do
   it "can find all transactions with result" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?result=#{Transaction.first.result}"
+    found_transactions = JSON.parse(response.body)
+    
+    expect(response).to be_success
+    expect(found_transactions).to be_a(Array)
+    expect(found_transactions.first["id"]).to eq(Transaction.first.id)
+    expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
+    expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
+    expect(found_transactions.first["result"]).to eq(Transaction.first.result)
+  end
+
+  it "can find all transactions with result case insensitive" do
+    create_list(:transaction, 3)
+    get "/api/v1/transactions/find_all?result=mytext"
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
