@@ -23,15 +23,15 @@ describe "Invoices API" do
     invoice = create(:invoice)
     get "/api/v1/invoices/#{Invoice.first.id}"
 
-    found_invoice = JSON.parse(response.body).first
+    found_invoice = JSON.parse(response.body)
 
     expect(response).to be_success
     expect(found_invoice).to be_a(Hash)
-    expect(found_invoice).to have("#{invoice.id}")
-    expect(found_invoice).to have("#{invoice.customer_id}")
-    expect(found_invoice).to have("#{invoice.merchant_id}")
-    expect(found_invoice).to have("#{invoice.status}")
-    expect(found_invoice).to have("#{invoice.created_at}")
-    expect(found_invoice).to have("#{invoice.updated_at}")
+    expect(found_invoice["id"]).to eq(invoice.id)
+    expect(found_invoice["customer_id"]).to eq(invoice.customer_id)
+    expect(found_invoice["merchant_id"]).to eq(invoice.merchant_id)
+    expect(found_invoice["status"]).to eq(invoice.status)
+    expect(Time.zone.parse(found_invoice["created_at"]).to_s).to eq(invoice.created_at.to_s)
+    expect(Time.zone.parse(found_invoice["updated_at"]).to_s).to eq(invoice.updated_at.to_s)
   end
 end
