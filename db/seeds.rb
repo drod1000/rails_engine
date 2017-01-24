@@ -45,7 +45,7 @@ CSV.foreach('db/data/invoice_items.csv', headers:true) do |row|
   InvoiceItem.create!(id: row["id"],
                       item_id: row["item_id"],
                       invoice_id: row["invoice_id"],
-                      quantity: row["quantitiy"].to_i,
+                      quantity: row["quantity"].to_i,
                       unit_price: row["unit_price"].to_i,
                       created_at: row["created_at"],
                       updated_at: row["updated_at"])
