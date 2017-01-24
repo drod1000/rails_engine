@@ -80,6 +80,19 @@ describe "Transactions API" do
     expect(found_transaction["result"]).to eq(transaction.result)
   end
 
+  it "can find a single transactions by result case insensitive" do
+    transaction = create(:transaction, result: "Success")
+    get "/api/v1/transactions/find?result=success"
+    found_transaction = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_transaction).to be_a(Hash)
+    expect(found_transaction["id"]).to eq(transaction.id)
+    expect(found_transaction["invoice_id"]).to eq(transaction.invoice_id)
+    expect(found_transaction["credit_card_number"]).to eq(transaction.credit_card_number)
+    expect(found_transaction["result"]).to eq(transaction.result)
+  end
+
   it "can find a single transactions by created_at" do
     transaction = create(:transaction)
     get "/api/v1/transactions/find?created_at=#{transaction.created_at}"
@@ -159,8 +172,9 @@ describe "Transactions API" do
   end
 
   it "can find all transactions with result case insensitive" do
-    create_list(:transaction, 3)
-    get "/api/v1/transactions/find_all?result=#{Transaction.first.result.upcase}"
+    create(:transaction, result: "Success")
+    create_list(:transaction, 2)
+    get "/api/v1/transactions/find_all?result=success"
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
