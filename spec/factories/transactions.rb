@@ -1,7 +1,11 @@
 FactoryGirl.define do
   factory :transaction do
     invoice_id 1
-    credit_card_number 1
-    result "MyText"
+    sequence :credit_card_number do |n|
+      n
+    end
+    sequence :result do |n|
+      "result#{n}"
+    end
   end
 end

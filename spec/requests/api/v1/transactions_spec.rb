@@ -112,7 +112,7 @@ describe "Transactions API" do
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(found_transactions).to be_a(Array)
+    expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
@@ -125,7 +125,7 @@ describe "Transactions API" do
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(found_transactions).to be_a(Array)
+    expect(found_transactions.count).to eq(3)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
@@ -138,7 +138,7 @@ describe "Transactions API" do
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(found_transactions).to be_a(Array)
+    expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
@@ -151,7 +151,7 @@ describe "Transactions API" do
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
-    expect(found_transactions).to be_a(Array)
+    expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
@@ -160,7 +160,7 @@ describe "Transactions API" do
 
   it "can find all transactions with result case insensitive" do
     create_list(:transaction, 3)
-    get "/api/v1/transactions/find_all?result=mytext"
+    get "/api/v1/transactions/find_all?result=#{Transaction.first.result.upcase}"
     found_transactions = JSON.parse(response.body)
     
     expect(response).to be_success
