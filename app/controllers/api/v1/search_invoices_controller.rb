@@ -10,6 +10,7 @@ class Api::V1::SearchInvoicesController < ApplicationController
       render json: Invoice.where(status: params[:status])
     end
   end
+  
   def show
     if params[:id]
        render json: Invoice.find_by(id: params[:id])
