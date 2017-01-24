@@ -70,6 +70,17 @@ describe "Customers API" do
     expect(found_customer["last_name"]).to eq(customer.last_name)
   end
 
+  it "finds one customer with matching first_name case insensitive" do
+    customer = create(:customer)
+    get "/api/v1/customers/find?first_name=mytext"
+    found_customer = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_customer["id"]).to eq(customer.id)
+    expect(found_customer["first_name"]).to eq(customer.first_name)
+    expect(found_customer["last_name"]).to eq(customer.last_name)
+  end
+
   it "finds one customer with matching created_at" do
     customer = create(:customer)
     get "/api/v1/customers/find?created_at=#{customer.created_at}"
@@ -116,9 +127,33 @@ describe "Customers API" do
     expect(found_customers.first["last_name"]).to eq(Customer.first.last_name)
   end
 
+  it "finds all customers with matching first_name case insensitive" do
+    create_list(:customer, 3)
+    get "/api/v1/customers/find_all?first_name=mytext"
+    found_customers = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_customers).to be_a(Array)
+    expect(found_customers.first["id"]).to eq(Customer.first.id)
+    expect(found_customers.first["first_name"]).to eq(Customer.first.first_name)
+    expect(found_customers.first["last_name"]).to eq(Customer.first.last_name)
+  end
+
   it "finds all customers with matching last_name" do
         create_list(:customer, 3)
     get "/api/v1/customers/find_all?last_name=#{Customer.first.last_name}"
+    found_customers = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(found_customers).to be_a(Array)
+    expect(found_customers.first["id"]).to eq(Customer.first.id)
+    expect(found_customers.first["first_name"]).to eq(Customer.first.first_name)
+    expect(found_customers.first["last_name"]).to eq(Customer.first.last_name)
+  end
+
+  it "finds all customers with matching last_name case insensitive" do
+    create_list(:customer, 3)
+    get "/api/v1/customers/find_all?last_name=mytext"
     found_customers = JSON.parse(response.body)
 
     expect(response).to be_success
