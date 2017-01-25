@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       get '/merchants/find', to: 'search_merchants#show'
       get '/merchants/random', to: 'random_merchants#show'
       get '/merchants/:id/favorite_customer', to: 'merchants_top_customer#show'
+      get '/merchants/most_items', to: 'merchants_most_items#index'
       get '/merchants/:id/items', to: 'merchant_items#index'
       get '/merchants/:id/invoices', to: 'merchant_invoices#index'
       resources :merchants, only: [:index, :show]
@@ -29,7 +30,7 @@ Rails.application.routes.draw do
       resources :invoices, only: [:index, :show]
       get '/items/find', to: 'search_items#show'
       get '/items/find_all', to: 'search_items#index'
-      get '/items/most_items', to: 'most_items#index'
+      get '/items/most_items', to: 'items_most_items#index'
       get '/items/:id/merchant', to: 'items_merchant#show'
       get '/items/:id/invoice_items', to: 'items_invoice_items#index'
       resources :items, only: [:index, :show]
