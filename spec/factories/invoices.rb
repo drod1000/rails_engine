@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :invoice do
     customer
-    merchant_id "2"
+    merchant
     status "shipped"
 
     factory :invoice_with_transactions do
