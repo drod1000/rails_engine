@@ -172,9 +172,10 @@ describe "Invoice Items API" do
 
   it "can return multiple records with matching invoice_id" do
     create_list(:invoice_item, 2)
-    create_list(:invoice_item, 2, invoice_id: 7)
+    invoice = create(:invoice)
+    create_list(:invoice_item, 2, invoice: invoice)
 
-    get "/api/v1/invoice_items/find_all?invoice_id=7"
+    get "/api/v1/invoice_items/find_all?invoice_id=#{invoice.id}"
 
     found_invoice_items = JSON.parse(response.body)
     first_invoice_item = found_invoice_items.first
@@ -182,7 +183,7 @@ describe "Invoice Items API" do
     expect(response).to be_success
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
-    expect(first_invoice_item["invoice_id"]).to eq(7)
+    expect(first_invoice_item["invoice_id"]).to eq(invoice.id)
   end
 
   it "can return multiple records with matching quantity" do

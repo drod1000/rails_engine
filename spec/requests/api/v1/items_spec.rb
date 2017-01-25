@@ -230,9 +230,9 @@ describe "Items API" do
   end
 
   it "can return multiple records with matching merchant_id" do
-    merchant = create(merchant)
+    merchant = create(:merchant)
     create_list(:item, 2)
-    create_list(:item, 2, merchant_id: merchant)
+    create_list(:item, 2, merchant: merchant)
 
     get "/api/v1/items/find_all?merchant_id=#{merchant.id}"
 

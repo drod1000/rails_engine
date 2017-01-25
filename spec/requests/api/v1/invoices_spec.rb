@@ -138,12 +138,8 @@ describe "Invoices API" do
 
   it "can return multiple records with matching customer_id" do
     create_list(:invoice, 2)
-<<<<<<< HEAD
-    create_list(:invoice, 2, customer_id: 5)
-=======
     customer = create(:customer)
     create_list(:invoice, 2, customer: customer)
->>>>>>> master
 
     get "/api/v1/invoices/find_all?customer_id=#{customer.id}"
 
@@ -153,11 +149,7 @@ describe "Invoices API" do
     expect(response).to be_success
     expect(found_invoices).to be_a(Array)
     expect(found_invoices.count).to eq(2)
-<<<<<<< HEAD
-    expect(first_invoice["customer_id"]).to eq(5)
-=======
     expect(first_invoice["customer_id"]).to eq(customer.id)
->>>>>>> master
   end
 
   it "can return multiple records with matching merchant_id" do

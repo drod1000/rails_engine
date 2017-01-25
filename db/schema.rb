@@ -10,11 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20170125015044) do
-=======
 ActiveRecord::Schema.define(version: 20170125032722) do
->>>>>>> master
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,5 +70,4 @@ ActiveRecord::Schema.define(version: 20170125032722) do
     t.index ["invoice_id"], name: "index_transactions_on_invoice_id", using: :btree
   end
 
-  add_foreign_key "transactions", "invoices"
 end
