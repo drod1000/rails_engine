@@ -139,7 +139,7 @@ describe "Transactions API" do
     found_transactions = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(found_transactions.count).to eq(3)
+    expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)

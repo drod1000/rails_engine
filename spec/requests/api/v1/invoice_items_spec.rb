@@ -17,8 +17,6 @@ describe "Invoice Items API" do
     expect(invoice_item).to have_key("invoice_id")
     expect(invoice_item).to have_key("quantity")
     expect(invoice_item).to have_key("unit_price")
-    expect(invoice_item).to have_key("created_at")
-    expect(invoice_item).to have_key("updated_at")
   end
 
   it "returns a single invoice item" do
@@ -158,7 +156,8 @@ describe "Invoice Items API" do
 
   it "can return multiple records with matching item_id" do
     create_list(:invoice_item, 2)
-    create_list(:invoice_item, 2, item_id: "6")
+    item = create(:item, id:6)
+    create_list(:invoice_item, 2, item: item)
 
     get "/api/v1/invoice_items/find_all?item_id=6"
 
@@ -240,5 +239,23 @@ describe "Invoice Items API" do
     expect(response).to be_success
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
+  end
+
+  it "can return invoice associated with record" do
+    create(:invoice_item)
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}/invoice"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.invoice.id)
+  end
+
+  it "can return item associated with record" do
+    create(:invoice_item)
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}/item"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.item.id)
   end
 end

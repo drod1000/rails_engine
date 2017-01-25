@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170125015044) do
+=======
+ActiveRecord::Schema.define(version: 20170125032722) do
+>>>>>>> master
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,29 +28,34 @@ ActiveRecord::Schema.define(version: 20170125015044) do
   end
 
   create_table "invoice_items", force: :cascade do |t|
-    t.string   "item_id"
-    t.string   "invoice_id"
     t.integer  "quantity"
     t.integer  "unit_price"
     t.datetime "created_at", precision: 0, null: false
     t.datetime "updated_at", precision: 0, null: false
+    t.integer  "item_id"
+    t.integer  "invoice_id"
+    t.index ["invoice_id"], name: "index_invoice_items_on_invoice_id", using: :btree
+    t.index ["item_id"], name: "index_invoice_items_on_item_id", using: :btree
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.string   "customer_id"
-    t.string   "merchant_id"
     t.text     "status"
     t.datetime "created_at",  precision: 0, null: false
     t.datetime "updated_at",  precision: 0, null: false
+    t.integer  "customer_id"
+    t.integer  "merchant_id"
+    t.index ["customer_id"], name: "index_invoices_on_customer_id", using: :btree
+    t.index ["merchant_id"], name: "index_invoices_on_merchant_id", using: :btree
   end
 
   create_table "items", force: :cascade do |t|
     t.citext   "name"
     t.citext   "description"
     t.integer  "unit_price"
-    t.string   "merchant_id"
     t.datetime "created_at",  precision: 0, null: false
     t.datetime "updated_at",  precision: 0, null: false
+    t.integer  "merchant_id"
+    t.index ["merchant_id"], name: "index_items_on_merchant_id", using: :btree
   end
 
   create_table "merchants", force: :cascade do |t|
