@@ -138,9 +138,10 @@ describe "Invoices API" do
 
   it "can return multiple records with matching customer_id" do
     create_list(:invoice, 2)
-    create_list(:invoice, 2, customer_id: "5")
+    customer = create(:customer)
+    create_list(:invoice, 2, customer: customer)
 
-    get "/api/v1/invoices/find_all?customer_id=5"
+    get "/api/v1/invoices/find_all?customer_id=#{customer.id}"
 
     found_invoices = JSON.parse(response.body)
     first_invoice = found_invoices.first
@@ -148,7 +149,7 @@ describe "Invoices API" do
     expect(response).to be_success
     expect(found_invoices).to be_a(Array)
     expect(found_invoices.count).to eq(2)
-    expect(first_invoice["customer_id"]).to eq("5")
+    expect(first_invoice["customer_id"]).to eq(customer.id)
   end
 
   it "can return multiple records with matching merchant_id" do
@@ -235,6 +236,16 @@ describe "Invoices API" do
 
     expect(response).to be_success
     expect(invoice.first["id"]).to eq(Invoice.first.invoice_items.first.item_id)
+    expect(invoice.count).to eq(3)
+  end
+
+  it "can return associated customer" do
+    create_list(:invoice, 3)
+    get "/api/v1/invoices/#{Invoice.first.id}/customer"
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice["id"]).to eq(Invoice.first.customer.id)
     expect(invoice.count).to eq(3)
   end
 

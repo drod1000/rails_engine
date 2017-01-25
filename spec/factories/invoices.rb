@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :invoice do
-    customer_id "1"
+    customer
     merchant_id "2"
     status "shipped"
 
