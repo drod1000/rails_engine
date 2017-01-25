@@ -223,4 +223,16 @@ describe "Transactions API" do
     expect(transaction).to have_key("credit_card_number")
     expect(transaction).to have_key("result")
   end
+
+  it "will return associated invoice" do
+    invoice = create(:invoice)
+    transaction = create(:transaction, invoice_id: invoice.id)
+
+    get "/api/v1/transactions/#{transaction.id}/invoice"
+
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice["id"]).to eq(transaction.invoice_id)
+  end
 end
