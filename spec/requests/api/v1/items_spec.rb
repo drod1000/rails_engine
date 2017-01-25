@@ -31,7 +31,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -46,7 +46,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -61,7 +61,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -76,7 +76,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -91,7 +91,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -106,7 +106,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -121,7 +121,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -136,7 +136,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -151,7 +151,7 @@ describe "Items API" do
     expect(found_item["id"]).to eq(item.id)
     expect(found_item["name"]).to eq(item.name)
     expect(found_item["description"]).to eq(item.description)
-    expect(found_item["unit_price"]).to eq(item.unit_price)
+    expect(found_item["unit_price"]).to eq(item.unit_price.to_s.insert(-3,"."))
     expect(found_item["merchant_id"]).to eq(item.merchant_id)
   end
 
@@ -226,7 +226,7 @@ describe "Items API" do
     expect(response).to be_success
     expect(found_items).to be_a(Array)
     expect(found_items.count).to eq(2)
-    expect(first_item["unit_price"]).to eq(5000)
+    expect(first_item["unit_price"]).to eq("50.00")
   end
 
   it "can return multiple records with matching merchant_id" do
