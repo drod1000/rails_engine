@@ -1,7 +1,7 @@
 class Api::V1::MostItemsController < ApplicationController 
 
   def index
-    render json: Item.left_outer_joins(:invoice_items)
+    render json: Item.joins(:invoice_items).group('items.id').order("SUM(invoice_items.quantity) DESC").limit(1)
   end
 
 end 
