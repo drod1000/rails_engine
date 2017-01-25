@@ -6,4 +6,8 @@ class Customer < ApplicationRecord
     order("RANDOM()").first
   end
 
+  def favorite_merchant
+    
+  end
+
 end
