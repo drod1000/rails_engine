@@ -17,8 +17,6 @@ describe "Invoice Items API" do
     expect(invoice_item).to have_key("invoice_id")
     expect(invoice_item).to have_key("quantity")
     expect(invoice_item).to have_key("unit_price")
-    expect(invoice_item).to have_key("created_at")
-    expect(invoice_item).to have_key("updated_at")
   end
 
   it "returns a single invoice item" do
