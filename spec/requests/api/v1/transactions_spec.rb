@@ -123,7 +123,7 @@ describe "Transactions API" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?id=#{Transaction.first.id}"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
@@ -133,12 +133,13 @@ describe "Transactions API" do
   end
 
   it "can find all transactions with invoice_id" do
-    create_list(:transaction, 3)
+    invoice = create(:invoice)
+    create_list(:transaction, 3, invoice: invoice)
     get "/api/v1/transactions/find_all?invoice_id=#{Transaction.first.invoice_id}"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
-    expect(found_transactions.count).to eq(1)
+    expect(found_transactions.count).to eq(3)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
     expect(found_transactions.first["invoice_id"]).to eq(Transaction.first.invoice_id)
     expect(found_transactions.first["credit_card_number"]).to eq(Transaction.first.credit_card_number)
@@ -149,7 +150,7 @@ describe "Transactions API" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?credit_card_number=#{Transaction.first.credit_card_number}"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
@@ -162,7 +163,7 @@ describe "Transactions API" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?result=#{Transaction.first.result}"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(found_transactions.count).to eq(1)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
@@ -176,7 +177,7 @@ describe "Transactions API" do
     create_list(:transaction, 2)
     get "/api/v1/transactions/find_all?result=success"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(found_transactions).to be_a(Array)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
@@ -189,7 +190,7 @@ describe "Transactions API" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?created_at=#{Transaction.first.created_at}"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(found_transactions).to be_a(Array)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
@@ -202,7 +203,7 @@ describe "Transactions API" do
     create_list(:transaction, 3)
     get "/api/v1/transactions/find_all?updated_at=#{Transaction.first.updated_at}"
     found_transactions = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(found_transactions).to be_a(Array)
     expect(found_transactions.first["id"]).to eq(Transaction.first.id)
@@ -221,5 +222,17 @@ describe "Transactions API" do
     expect(transaction).to have_key("invoice_id")
     expect(transaction).to have_key("credit_card_number")
     expect(transaction).to have_key("result")
+  end
+
+  it "will return associated invoice" do
+    invoice = create(:invoice)
+    transaction = create(:transaction, invoice_id: invoice.id)
+
+    get "/api/v1/transactions/#{transaction.id}/invoice"
+
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice["id"]).to eq(transaction.invoice_id)
   end
 end

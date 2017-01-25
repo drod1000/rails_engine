@@ -4,14 +4,19 @@ Rails.application.routes.draw do
       get 'transactions/find_all', to: 'search_transactions#index'
       get '/transactions/find', to: 'search_transactions#show'
       get '/transactions/random', to: 'random_transactions#show'
+      get '/transactions/:id/invoice', to: 'transaction_invoice#index'
       resources :transactions, only: [:index, :show]
       get '/merchants/find_all', to: 'search_merchants#index'
       get '/merchants/find', to: 'search_merchants#show'
       get '/merchants/random', to: 'random_merchants#show'
+      get '/merchants/:id/items', to: 'merchant_items#index'
+      get '/merchants/:id/invoices', to: 'merchant_invoices#index'
       resources :merchants, only: [:index, :show]
       get '/customers/find_all', to: 'search_customers#index'
       get '/customers/find', to: 'search_customers#show'
       get 'customers/random', to: 'random_customers#show'
+      get '/customers/:id/invoices', to: 'customer_invoices#index'
+      get '/customers/:id/transactions', to: 'customer_transactions#index'
       resources :customers, only: [:index, :show]
       get '/invoices/find', to: 'search_invoices#show'
       get '/invoices/find_all', to: 'search_invoices#index'

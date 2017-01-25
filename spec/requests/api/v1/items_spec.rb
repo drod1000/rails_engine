@@ -230,8 +230,8 @@ describe "Items API" do
   end
 
   it "can return multiple records with matching merchant_id" do
-    create_list(:item, 2)
     merchant = create(:merchant)
+    create_list(:item, 2)
     create_list(:item, 2, merchant: merchant)
 
     get "/api/v1/items/find_all?merchant_id=#{merchant.id}"
@@ -286,7 +286,7 @@ describe "Items API" do
     create(:item)
     get "/api/v1/items/#{Item.first.id}/merchant"
     item = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(item["id"]).to eq(Item.first.merchant.id)
   end
