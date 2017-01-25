@@ -197,8 +197,21 @@ describe "Items API" do
     expect(found_items.count).to eq(2)
   end
 
-  xit "can return multiple records with matching description" do
+  it "can return multiple records with matching description" do
+    item = create(:item)
+    item_2 = create(:item, description: "Some Other Description")
 
+    get "/api/v1/items/find_all?description=#{item_2.description}"
+
+    found_item = JSON.parse(response.body)
+
+    found_items = JSON.parse(response.body)
+    first_item = found_items.first
+
+    expect(response).to be_success
+    expect(found_items).to be_a(Array)
+    expect(found_items.count).to eq(1)
+    expect(first_item["description"]).to eq(item_2.description)
   end
 
   it "can return multiple records with matching unit_price" do
@@ -217,8 +230,8 @@ describe "Items API" do
   end
 
   it "can return multiple records with matching merchant_id" do
-    create_list(:item, 2)
     merchant = create(:merchant)
+    create_list(:item, 2)
     create_list(:item, 2, merchant: merchant)
 
     get "/api/v1/items/find_all?merchant_id=#{merchant.id}"
@@ -273,7 +286,7 @@ describe "Items API" do
     create(:item)
     get "/api/v1/items/#{Item.first.id}/merchant"
     item = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(item["id"]).to eq(Item.first.merchant.id)
   end
