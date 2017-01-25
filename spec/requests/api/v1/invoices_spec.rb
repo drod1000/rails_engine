@@ -214,7 +214,27 @@ describe "Invoices API" do
     invoice = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(invoice.first["invoice_id"]).to eq(Invoice.first.id.to_i)
+    expect(invoice.first["invoice_id"]).to eq(Invoice.first.id)
+    expect(invoice.count).to eq(3)
+  end
+
+  it "can return all associated invoice_items" do
+    create_list(:invoice_with_items, 3)
+    get "/api/v1/invoices/#{Invoice.first.id}/invoice_items"
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice.first["invoice_id"]).to eq(Invoice.first.id)
+    expect(invoice.count).to eq(3)
+  end
+
+  it "can return all associated items" do
+    create_list(:invoice_with_items, 3)
+    get "/api/v1/invoices/#{Invoice.first.id}/items"
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice.first["id"]).to eq(Invoice.first.invoice_items.first.item_id)
     expect(invoice.count).to eq(3)
   end
 
