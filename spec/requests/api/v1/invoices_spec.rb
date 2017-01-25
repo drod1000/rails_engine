@@ -16,8 +16,6 @@ describe "Invoices API" do
     expect(invoice).to have_key("customer_id")
     expect(invoice).to have_key("merchant_id")
     expect(invoice).to have_key("status")
-    expect(invoice).to have_key("created_at")
-    expect(invoice).to have_key("updated_at")
   end
 
   it "returns a single invoice" do
@@ -209,4 +207,15 @@ describe "Invoices API" do
     expect(found_invoice).to be_a(Array)
     expect(found_invoice.count).to eq(2)
   end
+
+  it "can return all associated transactions" do
+    create_list(:invoice_with_transactions, 3)
+    get "/api/v1/invoices/#{Invoice.first.id}/transactions"
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice.first["invoice_id"]).to eq(Invoice.first.id.to_i)
+    expect(invoice.count).to eq(3)
+  end
+
 end
