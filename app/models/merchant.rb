@@ -5,4 +5,8 @@ class Merchant < ApplicationRecord
   def self.random
     order("RANDOM()").first
   end
+
+  def favorite_customer
+    Customer.joins(:transactions).where(transactions: {result: "success"}, 	invoices: {merchant_id: self.id}).group('customers.id').order("count(customers.id) 	desc").limit(1)
+  end
 end

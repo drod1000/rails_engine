@@ -16,6 +16,6 @@ describe "Merchants API business intelligence" do
     favorite_customer = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(favorite_customer["id"]).to eq(customer_2.id)
+    expect(favorite_customer.first["id"]).to eq(customer_2.id)
   end
 end
