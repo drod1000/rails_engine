@@ -156,7 +156,8 @@ describe "Invoice Items API" do
 
   it "can return multiple records with matching item_id" do
     create_list(:invoice_item, 2)
-    create_list(:invoice_item, 2, item_id: "6")
+    item = create(:item, id:6)
+    create_list(:invoice_item, 2, item: item)
 
     get "/api/v1/invoice_items/find_all?item_id=6"
 
@@ -166,12 +167,13 @@ describe "Invoice Items API" do
     expect(response).to be_success
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
-    expect(first_invoice_item["item_id"]).to eq("6")
+    expect(first_invoice_item["item_id"]).to eq(6)
   end
 
   it "can return multiple records with matching invoice_id" do
     create_list(:invoice_item, 2)
-    create_list(:invoice_item, 2, invoice_id: "7")
+    invoice = create(:invoice, id: 7)
+    create_list(:invoice_item, 2, invoice: invoice)
 
     get "/api/v1/invoice_items/find_all?invoice_id=7"
 
@@ -181,7 +183,7 @@ describe "Invoice Items API" do
     expect(response).to be_success
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
-    expect(first_invoice_item["invoice_id"]).to eq("7")
+    expect(first_invoice_item["invoice_id"]).to eq(7)
   end
 
   it "can return multiple records with matching quantity" do
@@ -238,5 +240,23 @@ describe "Invoice Items API" do
     expect(response).to be_success
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
+  end
+
+  it "can return invoice associated with record" do
+    create(:invoice_item)
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}/invoice"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.invoice.id)
+  end
+
+  it "can return item associated with record" do
+    create(:invoice_item)
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}/item"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.item.id)
   end
 end

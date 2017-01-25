@@ -231,9 +231,10 @@ describe "Items API" do
 
   it "can return multiple records with matching merchant_id" do
     create_list(:item, 2)
-    create_list(:item, 2, merchant_id: "8")
+    merchant = create(:merchant)
+    create_list(:item, 2, merchant: merchant)
 
-    get "/api/v1/items/find_all?merchant_id=8"
+    get "/api/v1/items/find_all?merchant_id=#{merchant.id}"
 
     found_items = JSON.parse(response.body)
     first_item = found_items.first
@@ -241,7 +242,7 @@ describe "Items API" do
     expect(response).to be_success
     expect(found_items).to be_a(Array)
     expect(found_items.count).to eq(2)
-    expect(first_item["merchant_id"]).to eq("8")
+    expect(first_item["merchant_id"]).to eq(merchant.id)
   end
 
   it "can return multiple records with matching created_at" do
@@ -269,4 +270,25 @@ describe "Items API" do
     expect(found_item).to be_a(Array)
     expect(found_item.count).to eq(2)
   end
+
+  it "can return the invoice_items associated with the record" do
+    create(:item)
+    create(:invoice_item, item: Item.first)
+    get "/api/v1/items/#{Item.first.id}/invoice_items"
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item.first["item_id"]).to eq(Item.first.id)
+    expect(item.count).to eq(1)
+  end
+
+  it "can return the merchant associated with the record" do
+    create(:item)
+    get "/api/v1/items/#{Item.first.id}/merchant"
+    item = JSON.parse(response.body)
+    
+    expect(response).to be_success
+    expect(item["id"]).to eq(Item.first.merchant.id)
+  end
+
 end
