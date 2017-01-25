@@ -214,4 +214,19 @@ describe "Customers API" do
     expect(invoices.count).to eq(4)
   end
 
+  it "can return associated transactions" do
+    customer = create(:customer)
+    invoice_1, invoice_2 = create_list(:invoice, 2, customer_id: customer.id)
+    create_list(:transaction, 4, invoice_id: invoice_1.id)
+    create_list(:transaction, 6, invoice_id: invoice_2.id)
+
+    get "/api/v1/customers/#{customer.id}/transactions"
+
+    transactions = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(transactions).to be_a(Array)
+    expect(transactions.count).to eq(10)
+  end
+
 end
