@@ -10,7 +10,7 @@ describe "Items API business intelligence" do
     top_item = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(top_item["id"]).to eq(item1.id)
+    expect(top_item.first["id"]).to eq(item1.id)
   end
 
   it "returns more than one item with highest quantity sold" do
