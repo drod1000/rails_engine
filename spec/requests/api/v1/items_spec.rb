@@ -220,7 +220,7 @@ describe "Items API" do
 
   it "can return multiple records with matching merchant_id" do
     create_list(:item, 2)
-    create_list(:item, 2, merchant_id: "8")
+    create_list(:item, 2, merchant_id: 8)
 
     get "/api/v1/items/find_all?merchant_id=8"
 
@@ -230,7 +230,7 @@ describe "Items API" do
     expect(response).to be_success
     expect(found_items).to be_a(Array)
     expect(found_items.count).to eq(2)
-    expect(first_item["merchant_id"]).to eq("8")
+    expect(first_item["merchant_id"]).to eq(8)
   end
 
   it "can return multiple records with matching created_at" do
