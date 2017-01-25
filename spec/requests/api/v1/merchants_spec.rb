@@ -8,7 +8,7 @@ describe 'Merchants API' do
 
     merchants = JSON.parse(response.body)
     merchant = merchants.first
-    
+
     expect(response).to be_success
     expect(merchants.count).to eq(3)
     expect(merchant).to be_a(Hash)
@@ -20,7 +20,7 @@ describe 'Merchants API' do
     create(:merchant)
     get "/api/v1/merchants/#{Merchant.first.id}"
     merchant = JSON.parse(response.body)
-    
+
     expect(response).to be_success
     expect(merchant).to be_a(Hash)
     expect(merchant).to have_key("id")
@@ -145,6 +145,20 @@ describe 'Merchants API' do
     expect(merchant).to be_a(Hash)
     expect(merchant).to have_key("id")
     expect(merchant).to have_key("name")
+  end
+
+  it "can return associated items" do
+    merchant = create(:merchant)
+    create_list(:item, 4)
+    create_list(:item, 3, merchant_id: merchant.id)
+
+    get "/api/v1/merchants/#{merchant.id}/items"
+
+    items = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(items).to be_a(Array)
+    expect(items.count).to eq(3)
   end
 
 end

@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(version: 20170125015044) do
   end
 
   create_table "invoice_items", force: :cascade do |t|
-    t.integer  "item_id"
-    t.integer  "invoice_id"
+    t.string   "item_id"
+    t.string   "invoice_id"
     t.integer  "quantity"
     t.integer  "unit_price"
     t.datetime "created_at", precision: 0, null: false
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20170125015044) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.integer  "customer_id"
-    t.integer  "merchant_id"
+    t.string   "customer_id"
+    t.string   "merchant_id"
     t.text     "status"
     t.datetime "created_at",  precision: 0, null: false
     t.datetime "updated_at",  precision: 0, null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20170125015044) do
     t.citext   "name"
     t.citext   "description"
     t.integer  "unit_price"
-    t.integer  "merchant_id"
+    t.string   "merchant_id"
     t.datetime "created_at",  precision: 0, null: false
     t.datetime "updated_at",  precision: 0, null: false
   end
