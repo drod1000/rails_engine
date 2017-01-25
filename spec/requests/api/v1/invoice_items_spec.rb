@@ -241,4 +241,22 @@ describe "Invoice Items API" do
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
   end
+
+  it "can return invoice associated with record" do
+    create(:invoice_item)
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}/invoice"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.invoice.id)
+  end
+
+  it "can return item associated with record" do
+    create(:invoice_item)
+    get "/api/v1/invoice_items/#{InvoiceItem.first.id}/item"
+    invoice_item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice_item["id"]).to eq(InvoiceItem.first.item.id)
+  end
 end
