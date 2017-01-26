@@ -1,6 +1,23 @@
 require 'rails_helper'
 
 describe "Items API business intelligence" do
+  context "single item" do
+    it "finds an items best day" do
+      item = create(:item)
+      create_list(:invoice, 3, created_at: Time.zone.parse("2012-03-20T23:57:05.000Z"))
+      create_list(:invoice, 2, created_at: Time.zone.parse("2012-03-22T03:55:09.000Z"))
+      Invoice.all.each do |invoice|
+        create(:transaction, invoice: invoice, result: "success")
+        create(:invoice_item, item: item, invoice: invoice)
+      end
+      get "/api/v1/items/#{item.id}/best_day"
+      best_day = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(best_day["best_day"]).to eq("2012-03-20T23:57:05.000Z")
+    end
+  end
+
   it "returns item with highest quantity sold" do
     item1, item2, item3 = create_list(:item, 3)
     create_list(:invoice_item, 4, item: item1)
@@ -45,3 +62,4 @@ describe "Items API business intelligence" do
     expect(top_items.first["id"]).to eq(item_1.id)
   end
 end
+
