@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do
+
       namespace :transactions do
         get '/find_all', to: 'search_transactions#index'
         get '/find', to: 'search_transactions#show'
@@ -53,12 +54,14 @@ Rails.application.routes.draw do
         get '/:id/invoice_items', to: 'items_invoice_items#index'
         get '/:id/best_day', to: 'item_best_day#show'
       end
-      
       resources :items, only: [:index, :show]
-      get '/invoice_items/find', to: 'search_invoice_items#show'
-      get '/invoice_items/find_all', to: 'search_invoice_items#index'
-      get '/invoice_items/:id/invoice', to: 'invoice_items_invoice#show'
-      get '/invoice_items/:id/item', to: 'invoice_items_item#show'
+
+      namespace :invoice_items do
+        get '/find', to: 'search_invoice_items#show'
+        get '/find_all', to: 'search_invoice_items#index'
+        get '/:id/invoice', to: 'invoice_items_invoice#show'
+        get '/:id/item', to: 'invoice_items_item#show'
+      end
       resources :invoice_items, only: [:index, :show]
     end
   end
