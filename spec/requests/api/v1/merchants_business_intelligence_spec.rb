@@ -109,4 +109,3 @@ describe "Merchants Business Intelligence API" do
   end
 
 end
-
