@@ -8,16 +8,19 @@ Rails.application.routes.draw do
       get '/:id/invoice', to: 'transaction_invoice#index'
       end
       resources :transactions, only: [:index, :show]
-      get '/merchants/find_all', to: 'search_merchants#index'
-      get '/merchants/find', to: 'search_merchants#show'
-      get '/merchants/random', to: 'random_merchants#show'
-      get '/merchants/:id/favorite_customer', to: 'merchants_top_customer#show'
-      get '/merchants/revenue', to: 'merchants_revenue#index'
-      get '/merchants/most_revenue', to: 'merchants_top_by_revenue#index'
-      get '/merchants/most_items', to: 'merchants_most_items#index'
-      get '/merchants/:id/items', to: 'merchant_items#index'
-      get '/merchants/:id/invoices', to: 'merchant_invoices#index'
-      get '/merchants/:id/revenue', to: 'merchants_revenue#show'
+
+      namespace :merchants do
+      get '/find_all', to: 'search_merchants#index'
+      get '/find', to: 'search_merchants#show'
+      get '/random', to: 'random_merchants#show'
+      get '/:id/favorite_customer', to: 'merchants_top_customer#show'
+      get '/revenue', to: 'merchants_revenue#index'
+      get '/most_revenue', to: 'merchants_top_by_revenue#index'
+      get '/most_items', to: 'merchants_most_items#index'
+      get '/:id/items', to: 'merchant_items#index'
+      get '/:id/invoices', to: 'merchant_invoices#index'
+      get '/:id/revenue', to: 'merchants_revenue#show'
+      end
       resources :merchants, only: [:index, :show]
       get '/customers/find_all', to: 'search_customers#index'
       get '/customers/find', to: 'search_customers#show'
