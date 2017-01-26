@@ -13,14 +13,21 @@ To run rails_engine on your own machine simply clone this repository by running:
 You will also need the data from [Sales Engine](https://github.com/turingschool-examples/sales_engine). Clone this repository and copy the data by running:
 
 `git clone https://github.com/turingschool-examples/sales_engine.git`
+
 `cp -R sales_engine/data/ rails_engine/db/`
 
 To set up your app and create your database, run:
+
 `cd rails_engine`
+
 `bundle install`
+
 `rake db:create`
+
 `rake db:migrate`
+
 `rake db:test:prepare`
+
 `rake db:seed`
 
 This will give you a fully bundled app and a seeded database. Use the command `rspec` to run the test suite and start hitting endpoints!
@@ -28,4 +35,5 @@ This will give you a fully bundled app and a seeded database. Use the command `r
 
 ## Collaborators
 Annie Wolff 
+
 Daniel Rodriguez
