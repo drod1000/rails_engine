@@ -42,15 +42,18 @@ Rails.application.routes.draw do
         get '/:id/customer', to: 'invoice_customer#show'
         get '/:id/merchant', to: 'invoice_merchant#show'
       end
-      
       resources :invoices, only: [:index, :show]
-      get '/items/find', to: 'search_items#show'
-      get '/items/find_all', to: 'search_items#index'
-      get '/items/most_revenue', to: 'items_top_by_revenue#index'
-      get '/items/most_items', to: 'items_most_items#index'
-      get '/items/:id/merchant', to: 'items_merchant#show'
-      get '/items/:id/invoice_items', to: 'items_invoice_items#index'
-      get '/items/:id/best_day', to: 'item_best_day#show'
+
+      namespace :items do
+        get '/find', to: 'search_items#show'
+        get '/find_all', to: 'search_items#index'
+        get '/most_revenue', to: 'items_top_by_revenue#index'
+        get '/most_items', to: 'items_most_items#index'
+        get '/:id/merchant', to: 'items_merchant#show'
+        get '/:id/invoice_items', to: 'items_invoice_items#index'
+        get '/:id/best_day', to: 'item_best_day#show'
+      end
+      
       resources :items, only: [:index, :show]
       get '/invoice_items/find', to: 'search_invoice_items#show'
       get '/invoice_items/find_all', to: 'search_invoice_items#index'
