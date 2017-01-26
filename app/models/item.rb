@@ -6,7 +6,7 @@ class Item < ApplicationRecord
   default_scope { order('id') }
 
   def self.most_items(quantity)
-    joins(:invoice_items)
+    unscoped.all.joins(:invoice_items)
     .group('items.id')
     .order("SUM(invoice_items.quantity) DESC")
     .limit(quantity)
