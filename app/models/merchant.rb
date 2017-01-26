@@ -21,7 +21,16 @@ class Merchant < ApplicationRecord
   end
 
   def favorite_customer
-    Customer.joins(:transactions).where(transactions: {result: "success"}, 	invoices: {merchant_id: self.id}).group('customers.id').order("count(customers.id) 	desc").limit(1).first
+    Customer.favorite_of_merchant_id(self.id)
+  end
+
+  def self.favorite_of_customer_id(customer_id)
+    self.joins(invoices: :transactions)
+        .merge(Transaction.success)
+        .where(invoices: {customer_id: customer_id})
+        .group('merchants.id')
+        .order('count(merchants.id) DESC')
+        .first
   end
 
   def self.most_items(quantity)
