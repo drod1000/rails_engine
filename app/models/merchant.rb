@@ -6,6 +6,20 @@ class Merchant < ApplicationRecord
     order("RANDOM()").first
   end
 
+  def revenue(date)
+    invoices_by_date(date).joins(:transactions, :invoice_items)
+    .merge(Transaction.success)
+    .sum("invoice_items.unit_price * invoice_items.quantity")
+  end
+
+  def invoices_by_date(date)
+    if date
+      invoices.where(created_at: Time.zone.parse(date))
+    else
+      invoices
+    end
+  end
+
   def favorite_customer
     Customer.joins(:transactions)
             .where(transactions: {result: "success"}, 	invoices: {merchant_id: self.id})
@@ -20,5 +34,11 @@ class Merchant < ApplicationRecord
     .limit(quantity)
   end
 
-
+  def self.top_merchants_by_revenue(number)
+    joins(invoices: [:invoice_items, :transactions]).
+    select('merchants.id, merchants.name, sum(invoice_items.quantity*invoice_items.unit_price) as total').
+    merge(Transaction.success).
+    group('merchants.id').
+    order('total DESC').limit(number)
+  end
 end
