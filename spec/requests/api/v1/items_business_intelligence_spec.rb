@@ -32,18 +32,16 @@ describe "Items API business intelligence" do
     ii_1 = create_list(:invoice_item, 3, item: item_1, invoice: invoice_1)
     ii_2 = create_list(:invoice_item, 4, item: item_2, invoice: invoice_2)
     ii_1.each do |invoice_item|
-      create(:transaction, invoice: invoice_1, result: "sucess")
+      create(:transaction, invoice: invoice_1, result: "success")
     end
     ii_2.each do |invoice_item|
-      create(:transaction, invoice: invoice_1, result: "sucess")
+      create(:transaction, invoice: invoice_1, result: "success")
     end
 
     get "/api/v1/items/most_revenue?quantity=1"
 
     top_items = JSON.parse(response.body)
-
     expect(response).to be_success
-    byebug
-    expect(top_items.first["id"]).to eq(item_2.id)
+    expect(top_items.first["id"]).to eq(item_1.id)
   end
 end

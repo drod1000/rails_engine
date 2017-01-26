@@ -42,6 +42,25 @@ describe "Merchants Business Intelligence API" do
     expect(top_merchant.count).to eq(2)
   end
 
+  it "returns the top merchant by revenue" do
+    merchant_1, merchant_2 = create_list(:merchant, 2)
+    create_list(:invoice, 4, merchant_id: merchant_1.id)
+    create_list(:invoice, 3, merchant_id: merchant_2.id)
+    Invoice.all.each do |invoice|
+      create(:invoice_item, quantity: 1, unit_price: 1000, invoice: invoice)
+    end
+    InvoiceItem.all.each do |invoice_item|
+      create(:transaction, result: "success", invoice: invoice_item.invoice)
+    end
+
+    get "/api/v1/merchants/most_revenue?quantity=1"
+
+    top_merchants = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(top_merchants.first["id"]).to eq(merchant_1.id)
+  end
+
   it "returns a merchants favorite customer" do
     merchant = create(:merchant)
     customer_1, customer_2, customer_3 = create_list(:customer, 3)
