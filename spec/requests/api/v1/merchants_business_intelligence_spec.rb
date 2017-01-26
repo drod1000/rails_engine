@@ -40,6 +40,7 @@ describe "Merchant Business Intelligence API" do
     expect(top_merchant.first["id"]).to eq(merchant1.id)
     expect(top_merchant.last["id"]).to eq(merchant2.id)
     expect(top_merchant.count).to eq(2)
+  end
 
   it "returns a merchants favorite customer" do
     merchant = create(:merchant)
