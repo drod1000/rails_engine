@@ -31,6 +31,7 @@ Rails.application.routes.draw do
       resources :invoices, only: [:index, :show]
       get '/items/find', to: 'search_items#show'
       get '/items/find_all', to: 'search_items#index'
+      get '/items/most_revenue', to: 'items_top_by_revenue#index'
       get '/items/most_items', to: 'items_most_items#index'
       get '/items/:id/merchant', to: 'items_merchant#show'
       get '/items/:id/invoice_items', to: 'items_invoice_items#index'
