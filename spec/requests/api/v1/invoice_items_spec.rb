@@ -32,7 +32,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
 
   end
 
@@ -48,7 +48,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return single record by item_id" do
@@ -63,7 +63,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return single record by invoice_id" do
@@ -78,7 +78,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return single record by quantity" do
@@ -93,7 +93,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return single record by unit_price" do
@@ -108,7 +108,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return single record by created_at" do
@@ -123,7 +123,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return single record by updated_at" do
@@ -138,7 +138,7 @@ describe "Invoice Items API" do
     expect(found_invoice_item["item_id"]).to eq(invoice_item.item_id)
     expect(found_invoice_item["invoice_id"]).to eq(invoice_item.invoice_id)
     expect(found_invoice_item["quantity"]).to eq(invoice_item.quantity)
-    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price)
+    expect(found_invoice_item["unit_price"]).to eq(invoice_item.unit_price.to_s.insert(-3,"."))
   end
 
   it "can return multiple records with matching id" do
@@ -213,7 +213,7 @@ describe "Invoice Items API" do
     expect(response).to be_success
     expect(found_invoice_items).to be_a(Array)
     expect(found_invoice_items.count).to eq(2)
-    expect(first_invoice_item["unit_price"]).to eq(1200)
+    expect(first_invoice_item["unit_price"]).to eq(1200.to_s.insert(-3,"."))
   end
 
   it "can return multiple records with matching created_at" do
