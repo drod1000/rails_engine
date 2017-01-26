@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       get '/items/find_all', to: 'search_items#index'
       get '/items/:id/merchant', to: 'items_merchant#show'
       get '/items/:id/invoice_items', to: 'items_invoice_items#index'
+      get '/items/:id/best_day', to: 
       resources :items, only: [:index, :show]
       get '/invoice_items/find', to: 'search_invoice_items#show'
       get '/invoice_items/find_all', to: 'search_invoice_items#index'
