@@ -44,10 +44,10 @@ describe "Merchant Business Intelligence API" do
 
   it "returns the top merchant by revenue" do
     merchant_1, merchant_2 = create_list(:merchant, 2)
-    create_list(:invoice, 4, merchant: merchant_1)
-    create_list(:invoice, 3, merchant: merchant_2)
+    create_list(:invoice, 4, merchant_id: merchant_1.id)
+    create_list(:invoice, 3, merchant_id: merchant_2.id)
     Invoice.all.each do |invoice|
-      create_list(:invoice_item, 2, quantity: 1, unit_price: 1000)
+      create(:invoice_item, quantity: 1, unit_price: 1000, invoice: invoice)
     end
     InvoiceItem.all.each do |invoice_item|
       create(:transaction, result: "success", invoice: invoice_item.invoice)
@@ -55,10 +55,10 @@ describe "Merchant Business Intelligence API" do
 
     get "/api/v1/merchants/most_revenue?quantity=1"
 
-    top_merchant = JSON.parse(response.body)
+    top_merchants = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(top_merchant["id"]).to eq(merchant_1.id)
+    expect(top_merchants.first["id"]).to eq(merchant_1.id)
   end
 
   it "returns a merchants favorite customer" do
