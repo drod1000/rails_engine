@@ -18,4 +18,8 @@ class Item < ApplicationRecord
     order('total DESC').limit(number)
   end
 
+  def best_day
+    invoices.joins(:transactions, :invoice_items).merge(Transaction.success).group('invoices.id').order('sum(invoice_items.quantity) desc').first.created_at
+  end
+
 end

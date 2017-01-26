@@ -3,8 +3,6 @@ class Transaction < ApplicationRecord
   
   scope :success, -> { where result: 'success' }
 
-   scope :success, -> { where result: 'success' }
-
   def self.random
     order("RANDOM()").first
   end
