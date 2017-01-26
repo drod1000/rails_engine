@@ -1,4 +1,4 @@
-class Api::V1::SearchCustomersController < ApplicationController
+class Api::V1::Customers::SearchCustomersController < ApplicationController
 
 
   def index
