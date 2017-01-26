@@ -47,4 +47,13 @@ class Merchant < ApplicationRecord
     group('merchants.id').
     order('total DESC').limit(number)
   end
+
+  def self.total_revenue_on_date(date)
+    total_revenue = self.
+    joins(invoices: [:invoice_items, :transactions]).
+    where(invoices: {created_at: date }).
+    merge(Transaction.success).
+    sum('invoice_items.quantity*invoice_items.unit_price').to_s.chars.insert(-3, ".").join
+    { :total_revenue => total_revenue}
+  end
 end

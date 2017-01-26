@@ -15,8 +15,8 @@ describe "Merchants Business Intelligence API" do
 
     total_revenue = JSON.parse(response.body)
 
-    expect(response).to be("success")
-    expect(total_revenue).to eq("900.00")
+    expect(response).to be_success
+    expect(total_revenue["total_revenue"]).to eq("900.00")
   end
 
   it "returns the top merchant with most items sold" do
