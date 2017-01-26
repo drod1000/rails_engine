@@ -20,8 +20,10 @@ class Merchant < ApplicationRecord
   def self.top_merchants_by_revenue(number)
     joins(invoices: [:invoice_items, :transactions]).
 select('merchants.id, merchants.name, sum(invoice_items.quantity*invoice_items.unit_price) as total').
+merge(Transaction.success).
 group('merchants.id').
 order('total DESC').limit(number)
+
   end
 
 
