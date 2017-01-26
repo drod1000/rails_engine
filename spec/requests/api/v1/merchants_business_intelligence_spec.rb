@@ -1,6 +1,24 @@
 require 'rails_helper'
 
 describe "Merchants Business Intelligence API" do
+
+  it "returns revenue across all merchants" do
+    create_list(:invoice, 3)
+    Invoice.all.each do |invoice|
+      create(:invoice_item, invoice: invoice, unit_price: 6000, quantity: 5)
+    end
+    InvoiceItem.all.each do |ii|
+      create(:transaction, invoice: ii.invoice, result: "success")
+    end
+
+    get "/api/v1/merchants/revenue?date=#{Invoice.first.created_at}"
+
+    total_revenue = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(total_revenue["total_revenue"]).to eq("900.00")
+  end
+
   it "returns the top merchant with most items sold" do
     merchant1, merchant2, merchant3 = create_list(:merchant, 3)
     item1 = create(:item, merchant: merchant1)
