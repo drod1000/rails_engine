@@ -1,24 +1,31 @@
-# README
+# Rails Engine
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+rails_engine is an exercise in creating an internal API that serves up business anyltics. It features endpoints that return information on customers, merchants, invoices, invoice items and transactions.
 
-Things you may want to cover:
+This project was built as part of the Turing School Back End Engineering Curriculum. The spec can be found [here](http://backend.turing.io/module3/projects/rails_engine).
 
-* Ruby version
+# Setup
 
-* System dependencies
+To run rails_engine on your own machine simply clone this repository by running:
 
-* Configuration
+`git clone git@github.com:wlffann/rails_engine.git`
 
-* Database creation
+You will also need the data from [Sales Engine](https://github.com/turingschool-examples/sales_engine). Clone this repository and copy the data by running:
 
-* Database initialization
+`git clone https://github.com/turingschool-examples/sales_engine.git`
+`cp -R sales_engine/data/ rails_engine/db/`
 
-* How to run the test suite
+To set up your app and create your database, run:
+`cd rails_engine`
+`bundle install`
+`rake db:create`
+`rake db:migrate`
+`rake db:test:prepare`
+`rake db:seed`
 
-* Services (job queues, cache servers, search engines, etc.)
+This will give you a fully bundled app and a seeded database. Use the command `rspec` to run the test suite and start hitting endpoints!
 
-* Deployment instructions
 
-* ...
+## Collaborators
+Annie Wolff 
+Daniel Rodriguez
