@@ -3,6 +3,8 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   belongs_to :merchant
 
+  default_scope { order('id') }
+
   def self.most_items(quantity)
     joins(:invoice_items)
     .group('items.id')
