@@ -4,6 +4,11 @@ rails_engine is an exercise in creating an internal API that serves up business 
 
 This project was built as part of the Turing School Back End Engineering Curriculum. The spec can be found [here](http://backend.turing.io/module3/projects/rails_engine).
 
+## Collaborators
+Annie Wolff 
+
+Daniel Rodriguez
+
 # Setup
 
 To run rails_engine on your own machine simply clone this repository by running:
@@ -188,7 +193,3 @@ This will give you a fully bundled app and a seeded database. Use the command `r
 
 `GET /api/v1/customers/:id/favorite_merchant`
 
-## Collaborators
-Annie Wolff 
-
-Daniel Rodriguez
