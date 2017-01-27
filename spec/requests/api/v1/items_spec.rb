@@ -271,6 +271,20 @@ describe "Items API" do
     expect(found_item.count).to eq(2)
   end
 
+  it "can find a random item" do
+    create_list(:item, 3)
+    get '/api/v1/items/random'
+    item = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(item).to be_a(Hash)
+    expect(item).to have_key("id")
+    expect(item).to have_key("name")
+    expect(item).to have_key("description")
+    expect(item).to have_key("unit_price")
+    expect(item).to have_key("merchant_id")
+  end
+
   it "can return the invoice_items associated with the record" do
     create(:item)
     create(:invoice_item, item: Item.first)

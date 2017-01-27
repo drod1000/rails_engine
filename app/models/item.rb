@@ -5,6 +5,10 @@ class Item < ApplicationRecord
 
   default_scope { order('id') }
 
+  def self.random
+    order("RANDOM()").first
+  end
+
   def self.most_items(quantity)
     unscoped.all.joins(:invoice_items)
     .group('items.id')
