@@ -19,7 +19,9 @@ You will also need the data from [Sales Engine](https://github.com/turingschool-
 
 `git clone https://github.com/turingschool-examples/sales_engine.git`
 
-`cp -R sales_engine/data/ rails_engine/db/`
+`mkdir rails_engine/db/data`
+
+`cp -R sales_engine/data/ rails_engine/db/data/`
 
 To set up your app and create your database, run:
 
