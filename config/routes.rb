@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       namespace :invoice_items do
         get '/find', to: 'search_invoice_items#show'
         get '/find_all', to: 'search_invoice_items#index'
+        get '/random', to: 'random_invoice_items#show'
         get '/:id/invoice', to: 'invoice_items_invoice#show'
         get '/:id/item', to: 'invoice_items_item#show'
       end
