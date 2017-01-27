@@ -2,7 +2,7 @@
 
 rails_engine is an exercise in creating an internal API that serves up business anyltics. It features endpoints that return information on customers, merchants, invoices, invoice items and transactions.
 
-This project was built as part of the Turing School Back End Engineering Curriculum. The spec can be found [here](http://backend.turing.io/module3/projects/rails_engine).
+This project was built as part of the Turing School Back End Engineering Curriculum. The spec (containing all of the endpoints that can be reached) can be found [here](http://backend.turing.io/module3/projects/rails_engine).
 
 # Setup
 
