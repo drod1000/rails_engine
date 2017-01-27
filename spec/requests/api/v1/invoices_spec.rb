@@ -210,6 +210,19 @@ describe "Invoices API" do
     expect(found_invoice.count).to eq(2)
   end
 
+  it "can find a random item" do
+    create_list(:invoice, 3)
+    get '/api/v1/invoices/random'
+    invoice = JSON.parse(response.body)
+
+    expect(response).to be_success
+    expect(invoice).to be_a(Hash)
+    expect(invoice).to have_key("id")
+    expect(invoice).to have_key("status")
+    expect(invoice).to have_key("customer_id")
+    expect(invoice).to have_key("merchant_id")
+  end
+
   it "can return all associated transactions" do
     create_list(:invoice_with_transactions, 3)
     get "/api/v1/invoices/#{Invoice.first.id}/transactions"
